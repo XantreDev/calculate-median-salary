@@ -24,11 +24,16 @@ const schema = z.array(
   })
 );
 
+const lowerIncludes = (a: string, b: string) =>
+  a.toLowerCase().includes(b.toLowerCase());
 const parsed = schema
   .parse(data)
   .filter(
-    (i) => i.totalyearlycompensation > 5 && i.totalyearlycompensation < 10000
-  );
+    (i) => i.totalyearlycompensation > 5 && i.totalyearlycompensation < 1000
+  )
+  .filter((i) => lowerIncludes(i.title, "Software Engineer"))
+  .filter((i) => !lowerIncludes(i.title, "Intern"))
+  .filter((i) => !lowerIncludes(i.title, "Manager"));
 
 const groupedByLocation = group(parsed, (i) => i.location);
 const groupedByLocationNoUS = Object.fromEntries(
@@ -67,7 +72,7 @@ const result = markdownTable([
       ...allYears.map((year) => years?.[year]?.toString() ?? null),
     ])
     .filter((i) => i.filter((j) => j === null).length < 2)
-    .filter((i) => (groupedByLocationNoUS?.[i[0] ?? ""]?.length ?? 0) > 10)
+    .filter((i) => (groupedByLocationNoUS?.[i[0] ?? ""]?.length ?? 0) > 20)
     .sort(
       (a, b) =>
         median(
@@ -85,4 +90,12 @@ const result = markdownTable([
     ),
 ]);
 
-writeFile("README.md", result, "utf-8");
+writeFile(
+  "README.md",
+  `\
+This is table of median yearly compensation for software engineers excluding USA, based on data from [levels.fyi](https://www.levels.fyi/).
+Can be used as a rough estimate of wealthy income from relocation to another country.
+
+${result}`,
+  "utf-8"
+);
