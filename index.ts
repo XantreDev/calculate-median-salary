@@ -85,4 +85,4 @@ const result = markdownTable([
     ),
 ]);
 
-writeFile("result.md", result, "utf-8");
+writeFile("README.md", result, "utf-8");
