@@ -1,0 +1,22 @@
+{
+  "name": "calculate-median-salary",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@total-typescript/ts-reset": "^0.5.1",
+    "@types/node": "^20.6.0",
+    "dayjs": "^1.11.9",
+    "markdown-table": "^3.0.3",
+    "radash": "^11.0.0",
+    "tsx": "^3.12.8",
+    "typescript": "^5.2.2",
+    "zod": "^3.22.2"
+  }
+}
